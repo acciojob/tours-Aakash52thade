@@ -9,8 +9,6 @@ const App = () => {
 
   const fetchTours = () => {
     setLoading(true);
-    
-    // Simulate API call with setTimeout
     setTimeout(() => {
       setTours(toursData);
       setLoading(false);

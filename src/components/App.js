@@ -1,9 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Loading from "./Loading";
+import Tours from "./Tours";
+import { toursData } from "../data.js";
 
 const App = () => {
-    return(
+  const [tours, setTours] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchTours = () => {
+    setLoading(true);
+    
+    // Simulate API call with setTimeout
+    setTimeout(() => {
+      setTours(toursData);
+      setLoading(false);
+    }, 1000);
+  };
+
+  const removeTour = (id) => {
+    setTours(tours.filter((tour) => tour.id !== id));
+  };
+
+  useEffect(() => {
+    fetchTours();
+  }, []);
+
+  if (loading) {
+    return (
       <main id="main">
+        <Loading />
       </main>
-    )
-}
+    );
+  }
+
+  if (tours.length === 0) {
+    return (
+      <main id="main">
+        <div className="title">
+          <h2>No tours left</h2>
+          <button className="btn" onClick={fetchTours}>
+            Refresh
+          </button>
+        </div>
+      </main>
+    );
+  }
+
+  return (
+    <main id="main">
+      <Tours tours={tours} removeTour={removeTour} />
+    </main>
+  );
+};
+
 export default App;

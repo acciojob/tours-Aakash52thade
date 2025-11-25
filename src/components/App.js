@@ -9,6 +9,7 @@ const App = () => {
 
   const fetchTours = () => {
     setLoading(true);
+
     setTimeout(() => {
       setTours(toursData);
       setLoading(false);
@@ -16,7 +17,7 @@ const App = () => {
   };
 
   const removeTour = (id) => {
-    setTours(tours.filter((tour) => tour.id !== id));
+    setTours((prevTours) => prevTours.filter((tour) => tour.id !== id));
   };
 
   useEffect(() => {
@@ -34,12 +35,10 @@ const App = () => {
   if (tours.length === 0) {
     return (
       <main id="main">
-        <div className="title">
+        <section className="title">
           <h2>No tours left</h2>
-          <button className="btn" onClick={fetchTours}>
-            Refresh
-          </button>
-        </div>
+          <button className="btn" onClick={fetchTours}>Refresh</button>
+        </section>
       </main>
     );
   }
